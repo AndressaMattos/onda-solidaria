@@ -2,6 +2,7 @@ import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import styled from 'styled-components';
 
+
 const FormContainer = styled.div`
   height: 100vh;
   display: flex;
@@ -31,7 +32,6 @@ const Button = styled.button`
 `;
 
 type FormData = {
-    nomeOng: string;
     email: string;
     password: string;
     confirmPassword: string;
@@ -49,20 +49,12 @@ export const Cadastro: React.FC = () => {
             alert("As senhas não coincidem");
             return;
         }
-        // Faça aqui a lógica de envio do formulário de cadastro.
     };
 
     return (
         <FormContainer>
             <Form onSubmit={handleSubmit(onSubmit)}>
-                <label>Nome da ong</label>
-                <Input
-                    type="text"
-                    {...register('nomeOng', { required: 'Este campo é obrigatório' })}
-                />
-                
-                {errors.nomeOng && <span>{errors.nomeOng.message}</span>}
-                
+             
                 <label>Email</label>
                 <Input
                     type="email"
