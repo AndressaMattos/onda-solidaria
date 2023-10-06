@@ -1,5 +1,5 @@
 import React from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form'
 import {
   CenteredContainer,
   AuthForm,
@@ -9,11 +9,12 @@ import {
   Title,
   RecoverButton,
   RegisterButton
-} from './styled-components';
+} from './StyledComponents';
 
 interface LoginFormProps {
   onSubmit: SubmitHandler<FormValues>;
   onRecoverPassword: () => void;
+  onRegisterUser: () => void; // Adicionado para abrir o modal de registro
 }
 
 type FormValues = {
@@ -21,7 +22,7 @@ type FormValues = {
   password: string;
 };
 
-const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, onRecoverPassword }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, onRecoverPassword, onRegisterUser }) => {
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
 
   return (
@@ -32,7 +33,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, onRecoverPassword }) =>
           <label>Email</label>
           <Input
             type="text"
-            placeholder="Telefone, nome de usuário ou email"
+            placeholder="email"
             {...register('email', {
               required: 'Este campo é obrigatório',
             })}
@@ -53,8 +54,12 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, onRecoverPassword }) =>
 
         <Button type="submit">Entrar</Button>
 
-        <RecoverButton onClick={onRecoverPassword}>Esqueceu a senha?</RecoverButton>
-        <RegisterButton onClick={onRecoverPassword}>Cadastre-se sua ONG</RegisterButton>
+    <RecoverButton type="button" onClick={onRecoverPassword}>
+      Esqueceu a senha?
+    </RecoverButton>
+    <RegisterButton type="button" onClick={onRegisterUser}>
+      Cadastre-se sua ONG
+    </RegisterButton>
 
       </AuthForm>
     </CenteredContainer>

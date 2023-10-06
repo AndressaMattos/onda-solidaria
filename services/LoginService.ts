@@ -1,7 +1,18 @@
-import {signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
+import { signInWithEmailAndPassword, sendPasswordResetEmail, createUserWithEmailAndPassword } from 'firebase/auth';
 import {auth} from  '../firebaseConfig';
+import * as firebaseAuth from 'firebase/auth';
 
 export default class AuthService {
+    
+    getLoggedUser() {
+        return new Promise(resolve => {
+            firebaseAuth.onAuthStateChanged(auth, (user: any) => {
+                console.log(user);
+                resolve(user);
+            })
+        })
+    }
+    
     async login(email: string, password: string) {
       try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -25,4 +36,14 @@ export default class AuthService {
         throw error;
       }
     }
+
+    async registerUser (email: string, password:string) {
+      try {
+        await createUserWithEmailAndPassword(auth, email, password);
+        return true;
+      } catch (error) {
+        console.error('Erro durante o registro:', error);
+        return false;
+      }
+    };
   }

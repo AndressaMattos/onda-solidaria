@@ -1,15 +1,15 @@
 import React from "react"
 import { Routes, Route } from "react-router-dom"
-import { Cadastro } from "./Register"
 import { Login } from "./Login/Login"
-import { Home } from "./Home"
+import { Events } from "./Events/ListEvents"
+import { RegisterEvent } from "./Events/RegisterEvent"
 
 export const Router = () => {
     return (
         <Routes>
-            <Route path="/Eventos" element={<Home />}/>
-            <Route path="/Cadastro" element={<Cadastro />}/>
+            <Route path="/AllEvents" element={<Events />}/>
             <Route path="/Login" element={<Login />}/>
+            <Route path="/RegisterEvent" element={< RegisterEvent/>}/>
         </Routes>
     )
 }

@@ -5,7 +5,7 @@ export const CenteredContainer = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
-  margin: 0 auto; /* Adicione esta linha para centralizar verticalmente */
+  margin: 0 auto;
 `;
 
 export const AuthForm = styled.form`
@@ -38,6 +38,7 @@ export const ModalContent = styled.div`
   text-align: center;
   width: 300px;
 `;
+
 export const Input = styled.input`
   padding: 10px;
   border: 1px solid #ccc;

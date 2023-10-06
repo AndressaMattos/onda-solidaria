@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import LoginForm from './LoginForm';
-import RecoverPasswordModal from './RecoverPassword';
-import AuthService from '../../../services/AuthService';
-import { useNavigate } from 'react-router-dom';
+import RecoverPasswordModal from './RecoverPasswordModal';
+import RegisterUserModal from './RegisterUserModal';
+import AuthService from '../../../services/LoginService';
 
 export const Login: React.FC = () => {
   const [isRecoverPasswordModalOpen, setIsRecoverPasswordModalOpen] = useState(false);
+  const [isRegisterUserModalOpen, setIsRegisterUserModalOpen] = useState(false);
   const authService = new AuthService();
-  const navigate = useNavigate();
+
   const handleLogin = async (data) => {
     try {
       const user = await authService.login(data.email, data.password);
+      window.location.href = "/RegisterEvent";
       console.log(user);
-      navigate('/Eventos')
     } catch (error) {
       console.error('Erro ao fazer login:', error);
     }
@@ -26,15 +27,31 @@ export const Login: React.FC = () => {
     setIsRecoverPasswordModalOpen(false);
   };
 
+  const openRegisterUserModal = () => {
+    setIsRegisterUserModalOpen(true);
+  };
+
+  const closeRegisterUserModal = () => {
+    setIsRegisterUserModalOpen(false);
+  };
+
   return (
     <div>
-      <LoginForm onSubmit={handleLogin} onRecoverPassword={openRecoverPasswordModal} />
-      
-      {isRecoverPasswordModalOpen && (
-        <RecoverPasswordModal
-          onClose={closeRecoverPasswordModal}
-        />
-      )}
+      <LoginForm
+        onSubmit={handleLogin}
+        onRecoverPassword={openRecoverPasswordModal}
+        onRegisterUser={openRegisterUserModal}
+      />
+
+      <RecoverPasswordModal
+        isOpen={isRecoverPasswordModalOpen}
+        onRequestClose={closeRecoverPasswordModal}
+      />
+
+      <RegisterUserModal
+        isOpen={isRegisterUserModalOpen}
+        onRequestClose={closeRegisterUserModal}
+      />
     </div>
   );
 };
