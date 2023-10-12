@@ -7,9 +7,9 @@ import { RegisterEvent } from "./Events/RegisterEvent"
 export const Router = () => {
     return (
         <Routes>
-            <Route path="/AllEvents" element={<Events />}/>
-            <Route path="/Login" element={<Login />}/>
-            <Route path="/RegisterEvent" element={< RegisterEvent/>}/>
+            <Route path="/" element={<Events />}/>
+            <Route path="/login" element={<Login />}/>
+            <Route path="/register-event" element={< RegisterEvent/>}/>
         </Routes>
     )
 }

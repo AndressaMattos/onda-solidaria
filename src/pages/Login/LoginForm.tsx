@@ -30,10 +30,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, onRecoverPassword, onRe
       <AuthForm onSubmit={handleSubmit(onSubmit)}>
         <Title>Onda Solidária</Title>
         <div>
-          <label>Email</label>
           <Input
             type="text"
-            placeholder="email"
+            placeholder="Insira um e-mail"
             {...register('email', {
               required: 'Este campo é obrigatório',
             })}
@@ -42,10 +41,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, onRecoverPassword, onRe
         </div>
 
         <div>
-          <label>Senha</label>
           <Input
             type="password"
-            placeholder="Senha"
+            placeholder="Insira sua senha"
             {...register('password', { required: 'Este campo é obrigatório' })}
             minLength={8}
           />

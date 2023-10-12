@@ -6,6 +6,7 @@ class EventsService {
   private eventsCollectionRef = collection(this.db, "events");
 
   async createEvent(
+    userId: string,
     nameOng: string,
     city: string,
     state: string,
@@ -16,6 +17,7 @@ class EventsService {
   ) {
     try {
       const eventData = {
+        userId,
         nameOng,
         city,
         state,
@@ -33,6 +35,39 @@ class EventsService {
     } catch (e) {
       console.error("Erro ao adicionar documento: ", e);
       return false;
+    }
+  }
+
+  async listEventsByUser(userId: string){
+    try {
+      
+      if(!userId) return;
+
+      const q = query(this.eventsCollectionRef, where("userId", "==", userId));
+      const querySnapshot = await getDocs(q);
+      const events: any[] = [];
+      querySnapshot.forEach((doc) => {
+        events.push({ ...doc.data(), id: doc.id });
+      });
+      return events;
+    } catch (e) {
+      console.error("Erro ao listar documentos: ", e);
+      return [];
+    }
+  }
+
+  async listEvents() {
+    try {
+      const q = query(this.eventsCollectionRef);
+      const querySnapshot = await getDocs(q);
+      const events: any[] = [];
+      querySnapshot.forEach((doc) => {
+        events.push({ ...doc.data(), id: doc.id });
+      });
+      return events;
+    } catch (e) {
+      console.error("Erro ao listar documentos: ", e);
+      return [];
     }
   }
   

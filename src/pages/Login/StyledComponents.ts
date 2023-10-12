@@ -4,17 +4,20 @@ export const CenteredContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   margin: 0 auto;
 `;
 
 export const AuthForm = styled.form`
-  background-color: #fff;
+  background-color: #e3e3e3e3;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   text-align: center;
-  width: 300px;
+  width: 370px;
+  h2{
+    color: #000;
+  }
 `;
 
 export const ModalOverlay = styled.div`
@@ -44,7 +47,7 @@ export const Input = styled.input`
   border: 1px solid #ccc;
   border-radius: 4px;
   margin-bottom: 10px;
-  width: 100%;
+  width: 80%;
   font-size: 16px;
   transition: border-color 0.3s;
 
@@ -56,7 +59,7 @@ export const Input = styled.input`
 
 export const Button = styled.button`
   background-color: #007bff;
-  color: #fff;
+  color: #000;
   padding: 10px;
   border: none;
   border-radius: 4px;
@@ -78,6 +81,7 @@ export const ErrorText = styled.span`
 export const Title = styled.h2`
   font-size: 1.5rem;
   margin-bottom: 16px;
+  color: #000;
 `;
 
 export const RecoverButton = styled(Button)`

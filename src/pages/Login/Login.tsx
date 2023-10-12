@@ -12,7 +12,7 @@ export const Login: React.FC = () => {
   const handleLogin = async (data) => {
     try {
       const user = await authService.login(data.email, data.password);
-      window.location.href = "/RegisterEvent";
+      window.location.href = "/register-event";
       console.log(user);
     } catch (error) {
       console.error('Erro ao fazer login:', error);

@@ -17,6 +17,7 @@ interface RegisterUserModalProps {
 const RegisterUserModal: React.FC<RegisterUserModalProps> = ({ isOpen, onRequestClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
   const registerUser = new LoginService()
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -39,13 +40,12 @@ const RegisterUserModal: React.FC<RegisterUserModalProps> = ({ isOpen, onRequest
     >
       <CenteredContainer>
         <AuthForm>
+          <h2> Cadastro de ONG</h2>
           <div>
-            <label>Email</label>
-            <Input type="email" value={email} onChange={handleEmailChange} />
+            <Input type="email" placeholder="Insira um e-mail"  value={email} onChange={handleEmailChange} />
           </div>
           <div>
-            <label>Senha</label>
-            <Input type="password" value={password} onChange={handlePasswordChange} />
+            <Input type="password" placeholder="Insira uma senha" value={password} onChange={handlePasswordChange} />
           </div>
           <RegisterButton type="button" onClick={register}>
             Registrar
