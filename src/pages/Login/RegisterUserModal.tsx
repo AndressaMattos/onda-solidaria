@@ -1,13 +1,7 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import LoginService from '../../../services/LoginService';
-
-import {
-  CenteredContainer,
-  AuthForm,
-  Input,
-  RegisterButton
-} from './StyledComponents'
+import * as S from './styles'
 
 interface RegisterUserModalProps {
   isOpen: boolean;
@@ -38,23 +32,23 @@ const RegisterUserModal: React.FC<RegisterUserModalProps> = ({ isOpen, onRequest
       onRequestClose={onRequestClose}
       contentLabel="Registrar Usuário"
     >
-      <CenteredContainer>
-        <AuthForm>
+      <S.CenteredContainer>
+        <S.AuthForm>
           <h2> Cadastro de ONG</h2>
           <div>
-            <Input type="email" placeholder="Insira um e-mail"  value={email} onChange={handleEmailChange} />
+            <S.Input type="email" placeholder="Insira um e-mail"  value={email} onChange={handleEmailChange} />
           </div>
           <div>
-            <Input type="password" placeholder="Insira uma senha" value={password} onChange={handlePasswordChange} />
+            <S.Input type="password" placeholder="Insira uma senha" value={password} onChange={handlePasswordChange} />
           </div>
-          <RegisterButton type="button" onClick={register}>
+          <S.RegisterButton type="button" onClick={register}>
             Registrar
-          </RegisterButton>
-          <RegisterButton type="button" onClick={onRequestClose}>
+          </S.RegisterButton>
+          <S.RegisterButton type="button" onClick={onRequestClose}>
             Fechar
-          </RegisterButton>
-        </AuthForm>
-      </CenteredContainer>
+          </S.RegisterButton>
+        </S.AuthForm>
+      </S.CenteredContainer>
     </Modal>
   );
 };

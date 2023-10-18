@@ -1,5 +1,5 @@
 import { getFirestore, collection, addDoc, doc, deleteDoc, getDocs, query, where} from "firebase/firestore";
-import { auth } from "../firebaseConfig";
+import { auth } from "../src/config/firebaseConfig";
 
 class EventsService {
   private db = getFirestore(auth.app);
@@ -12,8 +12,8 @@ class EventsService {
     state: string,
     address: string,
     description: string,
-    startDate: string,
-    endDate: string
+    startDate: Date,
+    endDate: Date
   ) {
     try {
       const eventData = {

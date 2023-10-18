@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form'
-import EventsService from '../../../services/EventsService'; // Importe a classe EventsService
-import { useAuth } from '../../../AuthContext';
+import React from 'react';
+import { useForm } from 'react-hook-form'
+import EventsService from '../../../services/EventsService';
+import { useAuth } from '../../contexts/AuthContext';
+import * as S from './styles';
+import { Link } from 'react-router-dom';
 
 type FormValues = {
   nameOng: string;
@@ -9,8 +11,8 @@ type FormValues = {
   state: string;
   address: string;
   description: string;
-  startDate: string;
-  endDate: string;
+  startDate: Date;
+  endDate: Date;
 };
 
 /*
@@ -20,33 +22,6 @@ type FormValues = {
 export const RegisterEvent: React.FC = () => {
   const { currentUser, logout } = useAuth();
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
-  const [loading, setLoading] = useState(true);
-
-  const [nameOng, setNameOng] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [address, setAddress] = useState('');
-  const [description, setDescription] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-
-  const eventsService = new EventsService();
-  const [userEvents, setUserEvents] = useState<FormValues[]>([]); //lembrar de tipar com os itens retornados
-
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const userEventsFromDb = await eventsService.listEventsByUser(currentUser?.uid as string) as FormValues[];
-
-      setUserEvents(userEventsFromDb);
-      setLoading(false); // Defina o estado de carregamento como falso quando os dados estiverem prontos
-      
-    };
-    fetchData();
-  }, [loading])
-
-  console.log(loading);
-  
 
   console.log(currentUser?.uid);
 
@@ -55,7 +30,10 @@ export const RegisterEvent: React.FC = () => {
   }
 
 
-  const handleRegistration = async () => {
+
+  const handleRegistration = async (data: FormValues) => {
+    console.log(data);
+    const { nameOng, city, state, address, description, startDate, endDate } = data;
     const eventsService = new EventsService();
     const success = await eventsService.createEvent(
       currentUser.uid,
@@ -67,68 +45,98 @@ export const RegisterEvent: React.FC = () => {
       startDate,
       endDate
     );
-
     if (success) {
-      // Limpe os campos após o registro bem-sucedido
-      setNameOng('');
-      setCity('');
-      setState('');
-      setAddress('');
-      setDescription('');
-      setStartDate('');
-      setEndDate('');
+      alert('Evento cadastrado com sucesso!');
     }
+
   };
 
   return (
-    <div>
+    <S.Container>
       <button onClick={logout}>Sair</button>
-      <h2>Registro de Evento</h2>
-      <label>Nome da ONG:</label>
-      <input type="text" value={nameOng} onChange={(e) => setNameOng(e.target.value)} />
+      <Link to={'/events'}>Ver eventos</Link>
+      <h2>Registro de Eventos</h2>
+      
+      <S.AuthForm onSubmit={handleSubmit(handleRegistration)}>
+        <label>Nome da ONG:</label>
+        <S.Input
+          type="text"
+          placeholder="Insira o nome da ONG"
+          {...register('nameOng', {
+            required: 'Este campo é obrigatório',
+          })}
+        />
+        {errors.nameOng && <S.ErrorText>{errors.nameOng.message}</S.ErrorText>}
 
-      <label>Cidade:</label>
-      <input type="text" value={city} onChange={(e) => setCity(e.target.value)} />
+        <label>Cidade:</label>
 
-      <label>Estado:</label>
-      <input type="text" value={state} onChange={(e) => setState(e.target.value)} />
+        <S.Input
+          type="text"
+          placeholder="Insira uma cidade"
+          {...register('city', {
+            required: 'Este campo é obrigatório',
+          })}
+        />
+        {errors.city && <S.ErrorText>{errors.city.message}</S.ErrorText>}
+        <label>Estado:</label>
 
-      <label>Endereço:</label>
-      <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} />
+        <S.Input
+          type="text"
+          placeholder="Insira um estado"
+          {...register('state', {
+            required: 'Este campo é obrigatório',
+          })}
+        />
+        {errors.state && <S.ErrorText>{errors.state.message}</S.ErrorText>}
 
-      <label>Descrição:</label>
-      <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
 
-      <label>Data de Início:</label>
-      <input type="text" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+        <label>Endereço:</label>
 
-      <label>Data de Término:</label>
-      <input type="text" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+        <S.Input
+          type="text"
+          placeholder="Insira um endereço"
+          {...register('address', {
+            required: 'Este campo é obrigatório',
+          })}
+        />
+        {errors.address && <S.ErrorText>{errors.address.message}</S.ErrorText>}
 
-      <button onClick={handleRegistration}>Registrar Evento</button>
+        <label>Descrição:</label>
 
-      <h3>Eventos do usuário logado: </h3>
-      <ul>
-        {loading ? ( // Mostrar indicador de carregamento enquanto os dados estão sendo buscados
-          <p>Carregando eventos...</p>
-        ) : userEvents?.length > 0 ? ( // Verificar se há eventos antes de renderizar
-          userEvents?.map((event, index) => {
-            return (
-              <div key={index} style={{ display: "flex", flexDirection: "column" }}>
-                <h2>{event.nameOng}</h2>
-                <p>{event.city}</p>
-                <p>{event.state}</p>
-                <p>{event.address}</p>
-                <p>{event.description}</p>
-                <p>{event.startDate}</p>
-                <p>{event.endDate}</p>
-              </div>
-            )
-          })
-        ) : (
-          <p>Não há eventos cadastrados</p>
-        )}
-      </ul>
-    </div>
+        <S.Input
+          type="text"
+          placeholder="Insira uma descrição"
+          {...register('description', {
+            required: 'Este campo é obrigatório',
+          })}
+        />
+        {errors.description && <S.ErrorText>{errors.description.message}</S.ErrorText>}
+
+        <label>Data de Início:</label>
+
+        <S.Input
+          type="date"
+          placeholder="Insira uma data de início"
+          {...register('startDate', {
+            required: 'Este campo é obrigatório',
+          })}
+        />
+        {errors.startDate && <S.ErrorText>{errors.startDate.message}</S.ErrorText>}
+
+        <label>Data de Término:</label>
+
+        <S.Input
+          type="date"
+          placeholder="Insira uma data final"
+          {...register('endDate', {
+            required: 'Este campo é obrigatório',
+          })}
+        />
+        {errors.endDate && <S.ErrorText>{errors.endDate.message}</S.ErrorText>}
+
+        <button type='submit'>Registrar Evento</button>
+
+      </S.AuthForm>
+    </S.Container>
   );
 };

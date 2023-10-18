@@ -1,15 +1,6 @@
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form'
-import {
-  CenteredContainer,
-  AuthForm,
-  Input,
-  Button,
-  ErrorText,
-  Title,
-  RecoverButton,
-  RegisterButton
-} from './StyledComponents';
+import * as S from './styles'
 
 interface LoginFormProps {
   onSubmit: SubmitHandler<FormValues>;
@@ -26,41 +17,41 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, onRecoverPassword, onRe
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
 
   return (
-    <CenteredContainer>
-      <AuthForm onSubmit={handleSubmit(onSubmit)}>
-        <Title>Onda Solidária</Title>
+    <S.CenteredContainer>
+      <S.AuthForm onSubmit={handleSubmit(onSubmit)}>
+        <S.Title>Onda Solidária</S.Title>
         <div>
-          <Input
+          <S.Input
             type="text"
             placeholder="Insira um e-mail"
             {...register('email', {
               required: 'Este campo é obrigatório',
             })}
           />
-          {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
+          {errors.email && <S.ErrorText>{errors.email.message}</S.ErrorText>}
         </div>
 
         <div>
-          <Input
+          <S.Input
             type="password"
             placeholder="Insira sua senha"
             {...register('password', { required: 'Este campo é obrigatório' })}
             minLength={8}
           />
-          {errors.password && <ErrorText>{errors.password.message}</ErrorText>}
+          {errors.password && <S.ErrorText>{errors.password.message}</S.ErrorText>}
         </div>
 
-        <Button type="submit">Entrar</Button>
+        <S.Button type="submit">Entrar</S.Button>
 
-    <RecoverButton type="button" onClick={onRecoverPassword}>
+    <S.RecoverButton type="button" onClick={onRecoverPassword}>
       Esqueceu a senha?
-    </RecoverButton>
-    <RegisterButton type="button" onClick={onRegisterUser}>
+    </S.RecoverButton>
+    <S.RegisterButton type="button" onClick={onRegisterUser}>
       Cadastre-se sua ONG
-    </RegisterButton>
+    </S.RegisterButton>
 
-      </AuthForm>
-    </CenteredContainer>
+      </S.AuthForm>
+    </S.CenteredContainer>
   );
 };
 

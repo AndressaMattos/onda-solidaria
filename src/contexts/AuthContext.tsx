@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import * as firebaseAuth from 'firebase/auth';
-import {auth} from  './firebaseConfig';
+import { auth } from '../config/firebaseConfig';
 
 interface AuthContextType {
   currentUser: firebaseAuth.User | null;
@@ -11,7 +11,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<firebaseAuth.User  | null>(null);
+  const [currentUser, setCurrentUser] = useState<firebaseAuth.User | null>(null);
 
   console.log(currentUser);
 
@@ -24,10 +24,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       console.error('Erro ao fazer logout:', error);
     }
   };
-  
+
 
   useEffect(() => {
-    const unsubscribe = firebaseAuth.onAuthStateChanged(auth,(user : any) => {
+    const unsubscribe = firebaseAuth.onAuthStateChanged(auth, (user: any) => {
       setCurrentUser(user);
     });
 

@@ -1,13 +1,7 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import {
-  CenteredContainer,
-  AuthForm,
-  Input,
-  Title,
-  RegisterButton
-} from './StyledComponents';
 import AuthService from '../../../services/LoginService'; 
+import * as S from './styles'
 
 interface RecoverPasswordModalProps {
   isOpen: boolean;
@@ -37,21 +31,21 @@ const RecoverPasswordModal: React.FC<RecoverPasswordModalProps> = ({ isOpen, onR
       onRequestClose={onRequestClose}
       contentLabel="Recuperar Senha"
     >
-      <CenteredContainer>
-        <AuthForm>
-          <Title>Recuperar Senha</Title>
+      <S.CenteredContainer>
+        <S.AuthForm>
+          <S.Title>Recuperar Senha</S.Title>
           <div>
             <label>Email</label>
-            <Input type="email" placeholder="email" value={email} onChange={handleEmailChange} />
+            <S.Input type="email" placeholder="email" value={email} onChange={handleEmailChange} />
           </div>
-          <RegisterButton type="button" onClick={sendRecoverPassword}>
+          <S.RegisterButton type="button" onClick={sendRecoverPassword}>
             Enviar Email de Recuperação
-          </RegisterButton>
-          <RegisterButton type="button" onClick={onRequestClose}>
+          </S.RegisterButton>
+          <S.RegisterButton type="button" onClick={onRequestClose}>
             Fechar
-          </RegisterButton>
-        </AuthForm>
-      </CenteredContainer>
+          </S.RegisterButton>
+        </S.AuthForm>
+      </S.CenteredContainer>
     </Modal>
   );
 };

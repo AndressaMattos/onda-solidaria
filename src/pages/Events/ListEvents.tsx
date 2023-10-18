@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import EventsService from '../../../services/EventsService';
+import * as S from './styles';
 
 export const Events = () => {
 
@@ -16,30 +17,35 @@ export const Events = () => {
         fetchData();
     }, [])
 
-    if(isLoading) {
+    if (isLoading) {
         return <p>Carregando.... </p>
     }
-
 
     console.log(events);
     return (
         <>
-            <h1>Página de listagem dos eventos da ong (usuário) </h1>
-            {
-                events.map((event) => {
-                    return (
-                        <div style={{display: "flex"}}>
-                            <h2>{event.nameOng}</h2>
-                            <p>{event.city}</p>
-                            <p>{event.state}</p>
-                            <p>{event.address}</p>
-                            <p>{event.description}</p>
-                            <p>{event.startDate}</p>
-                            <p>{event.endDate}</p>
-                        </div>
-                    )
-                })
-            }  
+            <h1>Confira os principais eventos que estão acontecendo!</h1>
+            <S.Cards>
+                {
+                    events.map((event) => {
+                        return (
+                            <S.Card>
+                                <h2>{event.nameOng}</h2>
+                                <div className='event-infos'>
+                                    <span>{event.city}</span>
+                                    <span>{event.state}</span>
+                                    <span>{event.address}</span>
+                                    <span>{event.description}</span>
+                                </div>
+                                <div className='event-dates'>
+                                    <span>{event.startDate}</span>
+                                    <span>{event.endDate}</span>
+                                </div>
+                            </S.Card>
+                        )
+                    })
+                }
+            </S.Cards>
         </>
     )
 }

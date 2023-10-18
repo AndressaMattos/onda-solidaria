@@ -93,3 +93,4 @@ export const RegisterButton = styled(Button)`
   background-color: #ccc;
   margin-top: 10px;
 `;
+

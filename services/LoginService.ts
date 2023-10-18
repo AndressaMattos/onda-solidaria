@@ -1,5 +1,5 @@
 import { signInWithEmailAndPassword, sendPasswordResetEmail, createUserWithEmailAndPassword } from 'firebase/auth';
-import {auth} from  '../firebaseConfig';
+import {auth} from  '../src/config/firebaseConfig';
 import * as firebaseAuth from 'firebase/auth';
 
 export default class AuthService {
