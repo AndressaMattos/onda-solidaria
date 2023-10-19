@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import LoginService from '../../../services/LoginService';
+import LoginService from '../../services/LoginService';
 import * as S from './styles'
 
 interface RegisterUserModalProps {

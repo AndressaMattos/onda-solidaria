@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import LoginForm from './LoginForm';
 import RecoverPasswordModal from './RecoverPasswordModal';
 import RegisterUserModal from './RegisterUserModal';
-import AuthService from '../../../services/LoginService';
+import AuthService from '../../services/LoginService';
 
 export const Login: React.FC = () => {
   const [isRecoverPasswordModalOpen, setIsRecoverPasswordModalOpen] = useState(false);

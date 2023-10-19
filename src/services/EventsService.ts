@@ -1,36 +1,31 @@
-import { getFirestore, collection, addDoc, doc, deleteDoc, getDocs, query, where} from "firebase/firestore";
-import { auth } from "../src/config/firebaseConfig";
+import { getFirestore, collection, addDoc, doc, deleteDoc, getDocs, query, where, documentId, updateDoc} from "firebase/firestore";
+import { auth } from "../config/firebaseConfig";
+import { event } from "firebase-functions/v1/analytics";
+import { FormValues } from "../@types";
 
 class EventsService {
   private db = getFirestore(auth.app);
   private eventsCollectionRef = collection(this.db, "events");
 
-  async createEvent(
-    userId: string,
-    nameOng: string,
-    city: string,
-    state: string,
-    address: string,
-    description: string,
-    startDate: Date,
-    endDate: Date
-  ) {
+  async createEvent(eventData: FormValues) {
     try {
-      const eventData = {
-        userId,
-        nameOng,
-        city,
-        state,
-        address,
-        description,
-        startDate,
-        endDate,
-      };
-  
       console.log("Dados do evento a serem salvos:", eventData);
   
       const docRef = await addDoc(this.eventsCollectionRef, eventData);
       console.log("Dados salvos com sucesso com ID: ", docRef.id);
+      return true;
+    } catch (e) {
+      console.error("Erro ao adicionar documento: ", e);
+      return false;
+    }
+  }
+
+  async updateEvent(eventData: FormValues, id: string){
+    try {
+      console.log("Dados do evento a serem salvos:", eventData);
+  
+      await updateDoc(doc(this.db, "events", id), eventData);
+      console.log("Dados salvos com sucesso com ID: ", id);
       return true;
     } catch (e) {
       console.error("Erro ao adicionar documento: ", e);
@@ -44,12 +39,34 @@ class EventsService {
       if(!userId) return;
 
       const q = query(this.eventsCollectionRef, where("userId", "==", userId));
+      
       const querySnapshot = await getDocs(q);
+      
       const events: any[] = [];
       querySnapshot.forEach((doc) => {
         events.push({ ...doc.data(), id: doc.id });
       });
       return events;
+    } catch (e) {
+      console.error("Erro ao listar documentos: ", e);
+      return [];
+    }
+  }
+
+  async listEventById(id: string){
+    try {
+      
+      if(!id) return;
+      const q = query(this.eventsCollectionRef, where(documentId(), "==", id));
+      
+      const querySnapshot = await getDocs(q);
+      
+      const event: any[] = [];
+      querySnapshot.forEach((doc) => {
+        event.push({ ...doc.data(), id: doc.id });
+      });
+    
+      return event;
     } catch (e) {
       console.error("Erro ao listar documentos: ", e);
       return [];

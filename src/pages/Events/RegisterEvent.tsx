@@ -1,19 +1,11 @@
 import React from 'react';
 import { useForm } from 'react-hook-form'
-import EventsService from '../../../services/EventsService';
-import { useAuth } from '../../contexts/AuthContext';
-import * as S from './styles';
 import { Link } from 'react-router-dom';
+import EventsService from '../../services/EventsService';
+import { useAuth } from '../../contexts/AuthContext';
+import { FormValues } from '../../@types';
+import * as S from './styles';
 
-type FormValues = {
-  nameOng: string;
-  city: string;
-  state: string;
-  address: string;
-  description: string;
-  startDate: Date;
-  endDate: Date;
-};
 
 /*
   TODO: fazer a listagem dos eventos do usuário criado 
@@ -22,29 +14,18 @@ type FormValues = {
 export const RegisterEvent: React.FC = () => {
   const { currentUser, logout } = useAuth();
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
-
-  console.log(currentUser?.uid);
+  const eventsService = new EventsService();
 
   if (!currentUser) {
     return
   }
 
-
-
   const handleRegistration = async (data: FormValues) => {
-    console.log(data);
-    const { nameOng, city, state, address, description, startDate, endDate } = data;
-    const eventsService = new EventsService();
-    const success = await eventsService.createEvent(
-      currentUser.uid,
-      nameOng,
-      city,
-      state,
-      address,
-      description,
-      startDate,
-      endDate
-    );
+    const newEvent = {
+      ...data, 
+      userId: currentUser?.uid
+    }
+    const success = await eventsService.createEvent(newEvent);
     if (success) {
       alert('Evento cadastrado com sucesso!');
     }
@@ -58,15 +39,15 @@ export const RegisterEvent: React.FC = () => {
       <h2>Registro de Eventos</h2>
       
       <S.AuthForm onSubmit={handleSubmit(handleRegistration)}>
-        <label>Nome da ONG:</label>
+        <label>Nome do evento</label>
         <S.Input
           type="text"
-          placeholder="Insira o nome da ONG"
-          {...register('nameOng', {
+          placeholder="Insira o nome do evento"
+          {...register('eventName', {
             required: 'Este campo é obrigatório',
           })}
         />
-        {errors.nameOng && <S.ErrorText>{errors.nameOng.message}</S.ErrorText>}
+        {errors.eventName && <S.ErrorText>{errors.eventName.message}</S.ErrorText>}
 
         <label>Cidade:</label>
 

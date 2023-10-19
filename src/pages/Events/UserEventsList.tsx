@@ -1,19 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import EventsService from '../../../services/EventsService';
+import EventsService from '../../services/EventsService';
 import * as S from './styles'
 import { useAuth } from '../../contexts/AuthContext';
 import { Link } from 'react-router-dom'
-
-
-type FormValues = {
-    nameOng: string;
-    city: string;
-    state: string;
-    address: string;
-    description: string;
-    startDate: Date;
-    endDate: Date;
-};
+import { FormValues } from '../../@types';
 
 
 export const UserEventsList = () => {
@@ -38,12 +28,9 @@ export const UserEventsList = () => {
         return <p>Carregando.... </p>
     }
 
-    console.log(currentUser?.uid);
-
     if (!currentUser) {
         return
     }
-
 
     return (
         <>
@@ -53,7 +40,7 @@ export const UserEventsList = () => {
                     userEvents?.map((event, index) => {
                         return (
                             <S.Card key={index}>
-                                <h2>{event.nameOng}</h2>
+                                <h2>{event.eventName}</h2>
                                 <div className='event-infos'>
                                     <span>{event.city}</span>
                                     <span>{event.state}</span>
@@ -64,6 +51,7 @@ export const UserEventsList = () => {
                                     <span>{new Date(event.startDate).toDateString()}</span>
                                     <span>{new Date(event.endDate).toDateString()}</span>
                                 </div>
+                                <Link to={`/events/${event.id}`}>Update Event</Link>
                             </S.Card>
                         )
                     })
