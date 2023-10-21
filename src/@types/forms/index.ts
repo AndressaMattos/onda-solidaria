@@ -6,6 +6,6 @@ export type FormValues = {
   state: string;
   address: string;
   description: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
 };

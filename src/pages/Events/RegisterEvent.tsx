@@ -1,43 +1,71 @@
 import React from 'react';
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import EventsService from '../../services/EventsService';
 import { useAuth } from '../../contexts/AuthContext';
-import { FormValues } from '../../@types';
+import { zodResolver } from '@hookform/resolvers/zod'
+import { formattedDate } from '../../utils/formatDate';
+import { eventSchema, newEventSchema } from '../../@types/events';
 import * as S from './styles';
-
-
-/*
-  TODO: fazer a listagem dos eventos do usuário criado 
-*/
+import Swal from 'sweetalert2';
 
 export const RegisterEvent: React.FC = () => {
   const { currentUser, logout } = useAuth();
-  const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
+  const { register, handleSubmit, formState: { errors } } = useForm<eventSchema>({
+    resolver: zodResolver(newEventSchema),
+  });
+  const navigate = useNavigate();
   const eventsService = new EventsService();
+  const todayDate = formattedDate(new Date());
 
   if (!currentUser) {
-    return
+    Swal.fire({
+      title: 'Erro!',
+      text: 'Você precisa estar logado para registrar um evento!',
+      icon: 'error',
+      confirmButtonText: 'Ok'
+    })
+    navigate('/login');
   }
 
-  const handleRegistration = async (data: FormValues) => {
-    const newEvent = {
-      ...data, 
-      userId: currentUser?.uid
-    }
-    const success = await eventsService.createEvent(newEvent);
-    if (success) {
-      alert('Evento cadastrado com sucesso!');
+
+  const handleRegistration = async (data: eventSchema) => {
+    if (data?.startDate > data?.endDate) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'A data de início não pode ser maior que a data de término!',
+        icon: 'error',
+        confirmButtonText: 'Ok'
+      })
+      return;
     }
 
+    const newEvent = {
+      ...data,
+      userId: currentUser?.uid
+    }
+
+    try {
+      await eventsService.createEvent(newEvent);
+      Swal.fire({
+        title: 'Sucesso!',
+        text: 'Evento criado com sucesso!',
+        icon: 'success',
+        confirmButtonText: 'Ok'
+      })
+    } catch (error) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Algum erro ocorreu ao criar o evento!',
+        icon: 'error',
+        confirmButtonText: 'Ok'
+      })
+    }
   };
 
   return (
     <S.Container>
-      <button onClick={logout}>Sair</button>
-      <Link to={'/events'}>Ver eventos</Link>
       <h2>Registro de Eventos</h2>
-      
       <S.AuthForm onSubmit={handleSubmit(handleRegistration)}>
         <label>Nome do evento</label>
         <S.Input
@@ -101,6 +129,7 @@ export const RegisterEvent: React.FC = () => {
           {...register('startDate', {
             required: 'Este campo é obrigatório',
           })}
+          defaultValue={todayDate}
         />
         {errors.startDate && <S.ErrorText>{errors.startDate.message}</S.ErrorText>}
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 import AuthService from '../../services/LoginService'; 
 import * as S from './styles'
+import Swal from 'sweetalert2';
 
 interface RecoverPasswordModalProps {
   isOpen: boolean;
@@ -18,10 +19,20 @@ const RecoverPasswordModal: React.FC<RecoverPasswordModalProps> = ({ isOpen, onR
   const sendRecoverPassword = async () => {
     try {
       await recoverPassword.recoverPassword(email)
-      console.log('Email de recuperação de senha enviado com sucesso');
+      Swal.fire({
+        icon: 'success',
+        title: 'Email de recuperação de senha enviado com sucesso',
+        showConfirmButton: false,
+        timer: 1500
+      })
       onRequestClose(); 
     } catch (error) {
-      console.error('Erro ao solicitar recuperação de senha:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro ao enviar email de recuperação de senha',
+        showConfirmButton: false,
+        timer: 1500
+      })
     }
   };
 

@@ -1,33 +1,34 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import EventsService from '../../services/EventsService';
 import { useForm } from 'react-hook-form';
+import { FormValues } from '../../@types/forms';
+import { zodResolver } from '@hookform/resolvers/zod'
+import { eventSchema, newEventSchema } from '../../@types/events';
+import Swal from 'sweetalert2'
 import * as S from './styles';
-import { FormValues } from '../../@types';
 
 
 export const UpdateUserEvent = () => {
+    const [userEvent, setUserEvent] = useState<FormValues[]>([]);
+    const { register, handleSubmit, reset, formState: { errors } } = useForm<eventSchema>({
+        resolver: zodResolver(newEventSchema),
+    });
+    
     const { id } = useParams();
-
-    console.log(id)
-
-    const [userEvent, setUserEvent] = useState<FormValues[]>([]); //lembrar de tipar com os itens retornados
-
-    const { register, handleSubmit, reset, formState: { errors } } = useForm<FormValues>();
-
-    const eventsService = new EventsService();  //ver isso aq
+    const navigate = useNavigate();
+    const eventsService = new EventsService(); 
 
     useEffect(() => {
         const fetchData = async () => {
             const userEventsFromDb = await eventsService.listEventById(id as string) as FormValues[];
-
             setUserEvent(userEventsFromDb);
         };
         fetchData();
     }, [])
 
     useEffect(() => {
-        if(userEvent){
+        if (userEvent) {
             reset({
                 eventName: userEvent[0]?.eventName,
                 city: userEvent[0]?.city,
@@ -40,22 +41,29 @@ export const UpdateUserEvent = () => {
         }
     }, [userEvent]);
 
-    console.log(userEvent);
-
     const handleUpdateEvent = async (data: FormValues) => {
-        console.log(data);
-        await eventsService.updateEvent(data, id as string);
-       
-        alert('Evento atualizado com sucesso!');
-        
+        try {
+            await eventsService.updateEvent(data, id as string);
+            Swal.fire({
+                title: 'Sucesso!',
+                text: 'Evento atualizado com sucesso!',
+                icon: 'success',
+                confirmButtonText: 'Ok'
+            })
+            navigate('/events');
+        } catch (error) {
+            Swal.fire({
+                title: 'Erro!',
+                text: 'Erro ao atualizar o evento',
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            })
+        }  
     }
-    
 
     return (
         <S.Container>
-            <Link to={'/events'}>Ver eventos</Link>
             <h2>Atualização de eventos</h2>
-
             <S.AuthForm onSubmit={handleSubmit(handleUpdateEvent)}>
                 <label>Nome do evento</label>
                 <S.Input
@@ -64,7 +72,7 @@ export const UpdateUserEvent = () => {
                     {...register('eventName', {
                         required: 'Este campo é obrigatório',
                     })}
-                    
+
                 />
                 {errors.eventName && <S.ErrorText>{errors.eventName.message}</S.ErrorText>}
 
@@ -76,7 +84,7 @@ export const UpdateUserEvent = () => {
                     {...register('city', {
                         required: 'Este campo é obrigatório',
                     })}
-                    
+
                 />
                 {errors.city && <S.ErrorText>{errors.city.message}</S.ErrorText>}
                 <label>Estado:</label>
@@ -87,7 +95,7 @@ export const UpdateUserEvent = () => {
                     {...register('state', {
                         required: 'Este campo é obrigatório',
                     })}
-                    
+
                 />
                 {errors.state && <S.ErrorText>{errors.state.message}</S.ErrorText>}
 
@@ -100,7 +108,7 @@ export const UpdateUserEvent = () => {
                     {...register('address', {
                         required: 'Este campo é obrigatório',
                     })}
-                    
+
                 />
                 {errors.address && <S.ErrorText>{errors.address.message}</S.ErrorText>}
 
@@ -112,7 +120,7 @@ export const UpdateUserEvent = () => {
                     {...register('description', {
                         required: 'Este campo é obrigatório',
                     })}
-                    
+
                 />
                 {errors.description && <S.ErrorText>{errors.description.message}</S.ErrorText>}
 
@@ -123,7 +131,7 @@ export const UpdateUserEvent = () => {
                     placeholder="Insira uma data de início"
                     {...register('startDate', {
                         required: 'Este campo é obrigatório',
-                    })}  
+                    })}
                 />
                 {errors.startDate && <S.ErrorText>{errors.startDate.message}</S.ErrorText>}
 
@@ -138,7 +146,7 @@ export const UpdateUserEvent = () => {
                 />
                 {errors.endDate && <S.ErrorText>{errors.endDate.message}</S.ErrorText>}
 
-                <button type='submit'>Registrar Evento</button>
+                <button type='submit'>Atualizar Evento</button>
 
             </S.AuthForm>
         </S.Container>

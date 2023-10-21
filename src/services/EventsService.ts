@@ -1,7 +1,7 @@
 import { getFirestore, collection, addDoc, doc, deleteDoc, getDocs, query, where, documentId, updateDoc} from "firebase/firestore";
 import { auth } from "../config/firebaseConfig";
 import { event } from "firebase-functions/v1/analytics";
-import { FormValues } from "../@types";
+import { FormValues } from "../@types/forms";
 
 class EventsService {
   private db = getFirestore(auth.app);
@@ -9,10 +9,7 @@ class EventsService {
 
   async createEvent(eventData: FormValues) {
     try {
-      console.log("Dados do evento a serem salvos:", eventData);
-  
-      const docRef = await addDoc(this.eventsCollectionRef, eventData);
-      console.log("Dados salvos com sucesso com ID: ", docRef.id);
+      await addDoc(this.eventsCollectionRef, eventData);
       return true;
     } catch (e) {
       console.error("Erro ao adicionar documento: ", e);
@@ -22,21 +19,17 @@ class EventsService {
 
   async updateEvent(eventData: FormValues, id: string){
     try {
-      console.log("Dados do evento a serem salvos:", eventData);
-  
       await updateDoc(doc(this.db, "events", id), eventData);
-      console.log("Dados salvos com sucesso com ID: ", id);
       return true;
     } catch (e) {
-      console.error("Erro ao adicionar documento: ", e);
       return false;
     }
   }
 
   async listEventsByUser(userId: string){
     try {
-      
-      if(!userId) return;
+    
+      if( !userId ) return;
 
       const q = query(this.eventsCollectionRef, where("userId", "==", userId));
       
@@ -68,7 +61,7 @@ class EventsService {
     
       return event;
     } catch (e) {
-      console.error("Erro ao listar documentos: ", e);
+      
       return [];
     }
   }
@@ -89,15 +82,18 @@ class EventsService {
   }
   
 
-  async deleteUser(id: string) {
+  async deleteEventById(id: string) {
     try {
-      const userDoc = doc(this.db, "events", id);
-      await deleteDoc(userDoc);
-      console.log("Documento deletado com sucesso");
-      return true;
-    } catch (e) {
-      console.error("Erro ao deletar documento: ", e);
-      return false;
+      if(!id) return;
+      const q = query(this.eventsCollectionRef, where(documentId(), "==", id));
+      if (q) {
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach(async (doc) => {
+          await deleteDoc(doc.ref);
+        });
+      }
+    } catch (error) {
+      
     }
   }
 }

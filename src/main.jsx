@@ -4,6 +4,8 @@ import App from './App.jsx'
 import './index.css'
 import Modal from 'react-modal';
 
+import { AuthProvider } from "./contexts/AuthContext";
+
 const rootElement = document.getElementById('root');
 
 Modal.setAppElement(rootElement);
@@ -11,7 +13,9 @@ Modal.setAppElement(rootElement);
 
 ReactDOM.createRoot(rootElement).render(
  <React.StrictMode>
-  <App />
+  <AuthProvider>
+    <App />
+  </AuthProvider>
   </React.StrictMode>,
 )
 

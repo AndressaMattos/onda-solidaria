@@ -1,26 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import EventsService from '../../services/EventsService';
+import { FormValues } from '../../@types/forms';
 import * as S from './styles';
-import { FormValues } from '../../@types';
 
 export const Events = () => {
-
+    const [events, setEvents] = useState<FormValues[]>([]); 
     const eventsService = new EventsService();
-    const [isLoading, setIsLoading] = useState(true);
-    const [events, setEvents] = useState<any[]>([]); //lembrar de tipar com os itens retornados
-
+    
     useEffect(() => {
         const fetchData = async () => {
             const events = await eventsService.listEvents();
             setEvents(events);
-            setIsLoading(false);
         };
         fetchData();
     }, [])
-
-    if (isLoading) {
-        return <p>Carregando.... </p>
-    }
 
     return (
         <>
@@ -29,7 +22,7 @@ export const Events = () => {
                 {
                     events.map((event: FormValues) => {
                         return (
-                            <S.Card>
+                            <S.Card key={event.address}>
                                 <h2>{event.eventName}</h2>
                                 <div className='event-infos'>
                                     <span>{event.city}</span>

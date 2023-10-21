@@ -34,7 +34,7 @@ const RegisterUserModal: React.FC<RegisterUserModalProps> = ({ isOpen, onRequest
     >
       <S.CenteredContainer>
         <S.AuthForm>
-          <h2> Cadastro de ONG</h2>
+          <h2> Cadastro</h2>
           <div>
             <S.Input type="email" placeholder="Insira um e-mail"  value={email} onChange={handleEmailChange} />
           </div>
