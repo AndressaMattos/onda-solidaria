@@ -53,6 +53,7 @@ export const RegisterEvent: React.FC = () => {
         icon: 'success',
         confirmButtonText: 'Ok'
       })
+      navigate('/events');
     } catch (error) {
       Swal.fire({
         title: 'Error!',

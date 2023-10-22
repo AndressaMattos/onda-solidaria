@@ -6,6 +6,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { Link } from 'react-router-dom'
 import { FormValues } from '../../@types/forms';
 import Swal from 'sweetalert2';
+import { formattedDateToBr } from '../../utils/formatDate';
 
 
 export const UserEventsList = () => {
@@ -21,9 +22,9 @@ export const UserEventsList = () => {
             setUserEvents(userEventsFromDb);
             setLoading(false);
         };
-        fetchData();
-    }, [userEvents])
-
+        fetchData();   
+    }, [])
+   
     if (!currentUser) {
         Swal.fire({
             title: 'Erro!',
@@ -54,11 +55,14 @@ export const UserEventsList = () => {
             }).then((result) => {
                 if (result.isConfirmed) {
                     eventsService.deleteEventById(id);
+                    const updatedEvents = userEvents.filter(event => event.id !== id);
+                    setUserEvents(updatedEvents);
                     swalWithBootstrapButtons.fire(
                         'Deletado!',
                         'O evento foi deletado com sucesso',
                         'success'
                     )
+                   
                 } 
             })
         } catch (error) {
@@ -85,8 +89,8 @@ export const UserEventsList = () => {
                                 <span>{event.description}</span>
                             </div>
                             <div className='event-dates'>
-                                <span>{event.startDate}</span>
-                                <span>{event.endDate}</span>
+                                <span>{formattedDateToBr(event.startDate)}</span>
+                                <span>{formattedDateToBr(event.endDate)}</span>
                             </div>
                             <Link to={`/events/${event.id}`}>Update Event</Link>
                             <S.Button onClick={() => handleDeleteEvent(event.id as string)}>Deletar Evento</S.Button>

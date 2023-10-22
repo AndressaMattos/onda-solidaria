@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import EventsService from '../../services/EventsService';
 import { FormValues } from '../../@types/forms';
 import * as S from './styles';
+import { formattedDateToBr } from '../../utils/formatDate';
 
 export const Events = () => {
     const [events, setEvents] = useState<FormValues[]>([]); 
@@ -31,8 +32,8 @@ export const Events = () => {
                                     <span>{event.description}</span>
                                 </div>
                                 <div className='event-dates'>
-                                    <span>{event.startDate.toString()}</span>
-                                    <span>{event.endDate.toString()}</span>
+                                    <span>{formattedDateToBr(event.startDate)}</span>
+                                    <span>{formattedDateToBr(event.endDate)}</span>
                                 </div>
                             </S.Card>
                         )

@@ -14,8 +14,6 @@ export const Router = () => {
 
     const { currentUser } = useAuth();
 
-    console.log(currentUser?.uid)
-
     return (
         <BrowserRouter>
             <Routes>
