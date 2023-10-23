@@ -4,5 +4,5 @@ export const formattedDate = (data: Date) => {
 
 export const formattedDateToBr = (data: string) => {
     const date = new Date(data)
-    return new Intl.DateTimeFormat("pt-BR", { year: "numeric", month: "2-digit", day: "2-digit" }).format(date)
+    return new Intl.DateTimeFormat("pt-BR", { year: "numeric", month: "2-digit", day: "2-digit", timeZone: "UTC"}).format(date)
 }

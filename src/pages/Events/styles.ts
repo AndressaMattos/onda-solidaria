@@ -35,18 +35,19 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.button`
-  background-color: #007bff;
+  background-color: #610000;
   color: #fff;
   padding: 12px;
+  margin-top: 3px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  width: 100%;
+  width: 80%;
   font-size: 16px;
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: #e80909;
   }
 `;
 
@@ -89,14 +90,16 @@ export const Card = styled.li`
     text-align: center;
     width: 300px;
     border: 1px solid #e3e3e3;
-    background-color: #000000;
+    background-color: #181199;
     padding: 10px;
     border-radius: 8px;
+    color: #b6c2f2;
 
     .event-infos{
       display: flex;
       flex-direction: column;
       align-items: center;
+      color: #b6c2f2;
     }
     .event-dates{
       margin-top: 20px;

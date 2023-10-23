@@ -5,7 +5,8 @@ export const Header = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 30px;
-  background-color: #ffffff29;
+  background-color: #ffffff;
+  transition: background-color 0.3s;
   nav{
     display: flex;
     gap: 30px;
@@ -19,5 +20,9 @@ export const Header = styled.header`
     font-size: 16px;
     cursor: pointer;
     padding: 0;
+  }
+
+  &:hover {
+    background-color: #dedede;
   }
 `

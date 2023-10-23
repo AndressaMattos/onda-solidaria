@@ -23,7 +23,7 @@ export const Header = () => {
                     <nav>
                         <span> Logado como: <strong>{currentUser.email}</strong></span>
                         <Link to={'/events'}>
-                            Eventos
+                            Meus Eventos
                         </Link>
                         <Link to={'/events/register'}>
                             Cadastre seu evento!

@@ -18,7 +18,7 @@ export const Events = () => {
 
     return (
         <>
-            <h1>Confira os principais eventos que estão acontecendo!</h1>
+            <h2>Confira os principais eventos que estão acontecendo!</h2>
             <S.Cards>
                 {
                     events.map((event: FormValues) => {

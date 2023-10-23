@@ -92,7 +92,7 @@ export const UserEventsList = () => {
                                 <span>{formattedDateToBr(event.startDate)}</span>
                                 <span>{formattedDateToBr(event.endDate)}</span>
                             </div>
-                            <Link to={`/events/${event.id}`}>Update Event</Link>
+                            <Link to={`/events/${event.id}`}>Atualizar dados</Link>
                             <S.Button onClick={() => handleDeleteEvent(event.id as string)}>Deletar Evento</S.Button>
                         </S.Card>
                     )
