@@ -89,11 +89,12 @@ export const Card = styled.li`
     list-style: none;
     text-align: center;
     width: 300px;
-    border: 1px solid #e3e3e3;
+    border: 1px solid #181199;
     background-color: #181199;
     padding: 10px;
     border-radius: 8px;
     color: #b6c2f2;
+    box-shadow: 0px 4px 6px -1px rgba(0, 0, 0, 1), 0px 2px 4px -1px rgba(0, 0, 0, 1);
 
     .event-infos{
       display: flex;
