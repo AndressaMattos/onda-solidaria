@@ -66,8 +66,9 @@ export const RegisterEvent: React.FC = () => {
 
   return (
     <S.Container>
-      <h2>Registro de Eventos</h2>
+
       <S.AuthForm onSubmit={handleSubmit(handleRegistration)}>
+      <h2>Registro de Eventos</h2>
         <label>Nome do evento</label>
         <S.Input
           type="text"

@@ -16,25 +16,21 @@ export const Header = () => {
     return (
         <S.Header>
             <Link to={'/'}>
-                Onda Solidaria
+                Onda Solidária
             </Link>
             {
                 currentUser ? (
                     <nav>
-                        <span> Logado como: <strong>{currentUser.email}</strong></span>
-                        <Link to={'/events'}>
-                            Meus Eventos
-                        </Link>
-                        <Link to={'/events/register'}>
-                            Cadastre seu evento!
-                        </Link>
-                        <button onClick={handleLogout}> Deslogar </button>
+
+                     <p>   <span> Logado como: <strong>{currentUser.email}</strong></span> </p>
+                    <p>   <Link to={'/events'}> Meus Eventos </Link> </p>
+                    <p>   <Link to={'/events/register'}> Cadastre seu evento! </Link> </p>
+                    <p>   <button onClick={handleLogout}> Deslogar </button> </p>
+            
                     </nav>
                 ) : (
                     <nav>
-                        <Link to={'/login'}>
-                            Quer cadastrar seu evento? Clica aqui!
-                        </Link>
+                     <p>   <Link to={'/login'}> Quer cadastrar seu evento? Clica aqui! </Link></p>
                     </nav>
                 )
             }

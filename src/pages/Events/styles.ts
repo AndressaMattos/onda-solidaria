@@ -5,7 +5,8 @@ export const CenteredContainer = styled.div`
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #f4f4f4;
+  margin: 0 auto;
+  background-color: red;
 `;
 
 export const RegisterEventForm = styled.form`
@@ -34,9 +35,11 @@ export const Input = styled.input`
   }
 `;
 
+
+//Botão deletar
 export const Button = styled.button`
-  background-color: #610000;
-  color: #fff;
+  background-color: #f08a68;
+  color: black;
   padding: 12px;
   margin-top: 3px;
   border: none;
@@ -46,15 +49,19 @@ export const Button = styled.button`
   font-size: 16px;
   transition: background-color 0.3s;
 
+
+  //mouse em cima do deletar evento
   &:hover {
-    background-color: #e80909;
+    background-color: red;
   }
 `;
+
 
 export const Title = styled.h2`
   font-size: 1.8rem;
   margin-bottom: 20px;
 `;
+
 
 export const ErrorText = styled.span`
   color: red;
@@ -62,45 +69,53 @@ export const ErrorText = styled.span`
   margin-top: 10px;
 `;
 
-
+//Formulário do Registro de Eventos
 export const AuthForm = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: #e3e3e3e3;
-  padding: 20px;
+  padding: 10px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   text-align: center;
   width: 700px;
+  margin-top: 50px;
   h2, label{
     color: #000;
     font-weight: bolder;
   }
 `;
 
+
+//linha dos cards dos eventos
 export const Cards = styled.ul`
   display: flex;
   gap: 20px;
+  
 `
 
+
+//Card do Evento
 export const Card = styled.li`
     list-style: none;
     text-align: center;
     width: 300px;
     border: 1px solid #181199;
-    background-color: #181199;
+    background-color: white;
     padding: 10px;
     border-radius: 8px;
-    color: #b6c2f2;
+    color: black;
     box-shadow: 0px 4px 6px -1px rgba(0, 0, 0, 1), 0px 2px 4px -1px rgba(0, 0, 0, 1);
 
+
+// Informações de dentro do card
     .event-infos{
       display: flex;
       flex-direction: column;
       align-items: center;
-      color: #b6c2f2;
+      color: black;
     }
     .event-dates{
       margin-top: 20px;
@@ -109,9 +124,14 @@ export const Card = styled.li`
     }
 
 `
+// Títulos h2
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
+  color:black;
+  text-shadow: 2px solid white;
 `
+

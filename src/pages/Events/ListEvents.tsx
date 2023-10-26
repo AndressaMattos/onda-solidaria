@@ -18,7 +18,9 @@ export const Events = () => {
 
     return (
         <>
+        <S.Container>
             <h2>Confira os principais eventos que estão acontecendo!</h2>
+            </S.Container>
             <S.Cards>
                 {
                     events.map((event: FormValues) => {
@@ -31,9 +33,9 @@ export const Events = () => {
                                     <span>{event.address}</span>
                                     <span>{event.description}</span>
                                 </div>
-                                <div className='event-dates'>
-                                    <span>{formattedDateToBr(event.startDate)}</span>
-                                    <span>{formattedDateToBr(event.endDate)}</span>
+                                <div className='event-dates'>                    
+                                            <span>{formattedDateToBr(event.startDate)}</span>
+                                            <span>{formattedDateToBr(event.endDate)}</span>
                                 </div>
                             </S.Card>
                         )

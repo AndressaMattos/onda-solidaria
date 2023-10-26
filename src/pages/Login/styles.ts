@@ -9,7 +9,7 @@ export const CenteredContainer = styled.div`
 `;
 
 export const AuthForm = styled.form`
-  background-color: #e3e3e3e3;
+  background-color: white;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -66,10 +66,15 @@ export const Button = styled.button`
   cursor: pointer;
   width: 100%;
   font-size: 16px;
-
+  
   &:hover {
     background-color: #0056b3;
   }
+`;
+
+export const RegisterButton = styled(Button)`
+  background-color: #ccc;
+  margin-top: 10px;
 `;
 
 export const ErrorText = styled.span`
@@ -89,7 +94,3 @@ export const RecoverButton = styled(Button)`
   margin-top: 10px;
 `;
 
-export const RegisterButton = styled(Button)`
-  background-color: #ccc;
-  margin-top: 10px;
-`;
