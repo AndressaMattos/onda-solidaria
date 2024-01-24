@@ -28,7 +28,7 @@ body {
   box-sizing: border-box;
   min-height: 100vh;
   
-  background: linear-gradient(rgba(255, 255, 255, 0.4), #49c5b6), url(img/arvore.png)  ;
+  background: linear-gradient(rgba(255, 255, 255, 0.4), #49c5b6), url(https://raw.githubusercontent.com/pablovianas/onda-solidaria/main/img/arvore.png)  ;
   background-position: center center;
   background-size: cover;
   background-position-y: 0;
